@@ -10,6 +10,7 @@ export default function Contact() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,29 +20,56 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // Formspree를 통해 실제 이메일 전송
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 실제로는 여기서 서버로 데이터를 전송합니다
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setSubmitted(false);
-    }, 3000);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('https://formspree.io/f/mgoqvbyq', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 3000);
+      } else {
+        alert('메시지 전송에 실패했습니다. 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('메시지 전송에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const contactInfo = [
     {
       icon: '📧',
       title: 'Email',
-      value: 'your.email@example.com',
-      link: 'mailto:your.email@example.com',
+      value: 'rlatjdwns@icloud.com',
+      link: 'mailto:rlatjdwns@icloud.com',
     },
     {
       icon: '📱',
       title: 'Phone',
-      value: '+82 10-1234-5678',
-      link: 'tel:+82101234567',
+      value: '+82 010-5544-7419',
+      link: 'tel:+821055447419',
     },
     {
       icon: '📍',
@@ -89,6 +117,7 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 placeholder="당신의 이름을 입력하세요"
+                disabled={isLoading}
               />
             </div>
 
@@ -102,6 +131,7 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 placeholder="your.email@example.com"
+                disabled={isLoading}
               />
             </div>
 
@@ -115,6 +145,7 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 placeholder="프로젝트 제목을 입력하세요"
+                disabled={isLoading}
               />
             </div>
 
@@ -128,11 +159,12 @@ export default function Contact() {
                 required
                 rows="6"
                 placeholder="자세한 내용을 입력하세요..."
+                disabled={isLoading}
               ></textarea>
             </div>
 
-            <button type="submit" className="submit-btn">
-              {submitted ? '✓ 전송되었습니다!' : '메시지 보내기'}
+            <button type="submit" className="submit-btn" disabled={isLoading}>
+              {isLoading ? '⏳ 전송 중...' : submitted ? '✓ 전송되었습니다!' : '메시지 보내기'}
             </button>
           </form>
         </div>

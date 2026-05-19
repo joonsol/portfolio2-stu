@@ -1,184 +1,183 @@
-@import './variables.css';
+/* About 섹션 전체 배경 및 레이아웃 */
+.about-section {
+  background-color: #1a1a1a; /* 공통 다크 차콜/블랙 배경 */
+  color: #ffffff;
+  padding: 8rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease; /* 공통 전환 효과 */
+}
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 제목 및 부제목 스타일링 */
+.about-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.about-subtitle {
+  color: #a0a0a0; /* 회색 부제목 */
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 700px;
+  text-align: center;
+  margin: 0 auto 5rem; /* 중앙 정렬 및 아래 간격 확보 */
+}
+
+/* 통계 박스 디자인 */
+/* =========================================
+   About 섹션 통계 박스 (박스 디자인 + 중앙 정렬)
+   ========================================= */
+
+/* 1. 📦 통계 박스 전체 네모 틀 (부활!) */
+.about-stats-box {
+  /* --- 외형 디자인 --- */
+  background-color: #1a1a1a; /* 다크모드 기본 배경 박스 */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* 은은한 테두리 */
+  border-radius: 16px; /* 부드러운 둥근 모서리 */
+  padding: 2.5rem 2rem; /* 박스 안쪽 넉넉한 여백 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 입체감 그림자 */
+  margin-top: 3rem; /* 위쪽 텍스트와의 간격 */
+
+  /* --- 내부 글씨 정렬 --- */
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* 2. 각각의 통계 기둥(숫자+글씨) 중앙 정렬 */
+.stat-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가로 완벽 중앙 정렬 */
+  justify-content: flex-start;
+  text-align: center; /* 줄바꿈 텍스트 중앙 정렬 */
+  flex: 1;
+  min-width: 120px;
+}
+
+/* 3. 숫자(h3) 위치 및 여백 */
+.stat-column h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem; /* 숫자 크기 (필요시 조절) */
+  color: #ffca3a; /* 숫자에 시그니처 노란색 포인트! */
+}
+
+/* 4. 아래쪽 설명 텍스트(p) 위치 */
+.stat-column p {
+  margin: 0;
+  line-height: 1.4;
+  color: #a0a0a0;
+  font-size: 1rem;
+}
+
+/* 'Collaborations' 줄바꿈 처리 */
+.stat-column.collaborations p {
+  width: 130px; /* 특정 너비로 제한하여 줄바꿈 유도 */
+  margin: 0 auto;
+}
+
+/* 반응형 처리 (화면이 작아질 때 세로로 쌓기) */
+@media (max-width: 992px) {
+  .about-stats-box {
+    flex-direction: column;
+    padding: 3rem;
   }
+
+  .stat-column {
+    margin-bottom: 3rem;
+  }
+
+  .stat-column:last-child {
+    margin-bottom: 0;
+  }
+
+  /* 모바일에서는 세로 구분선 숨김 */
+  .stat-column:not(:last-child)::after {
+    display: none;
+  }
+}
+/* =========================================
+   About 섹션 스크롤 애니메이션 (Scroll Reveal)
+   ========================================= */
+
+/* 1. 기본 상태: 모든 요소를 숨기고 아래로 내려놓음 */
+.about-title,
+.about-subtitle,
+.about-stats-box {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.stat-column {
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+}
+
+/* 2. 스크롤 감지 완료! (animate-on-scroll 클래스가 붙었을 때) */
+/* 제목은 부드럽게 위로 등장 */
+.animate-on-scroll .about-title {
+  animation: fadeUp 0.8s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 부제목은 0.2초 늦게 등장 */
+.animate-on-scroll .about-subtitle {
+  animation: fadeUp 0.8s forwards cubic-bezier(0.25, 1, 0.5, 1) 0.2s;
+}
+
+/* 큰 네모 박스는 0.4초 늦게 등장 */
+.animate-on-scroll .about-stats-box {
+  animation: fadeUp 0.8s forwards cubic-bezier(0.25, 1, 0.5, 1) 0.4s;
+}
+
+/* 3. 통계 기둥 4개: 시차를 두고 통통 튀어 오르는(Pop) 효과 */
+.animate-on-scroll .stat-column {
+  /* cubic-bezier를 사용해 젤리처럼 살짝 더 커졌다가 제자리로 돌아오는 효과 */
+  animation: popIn 0.6s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-on-scroll .stat-column:nth-child(1) {
+  animation-delay: 0.6s;
+}
+.animate-on-scroll .stat-column:nth-child(2) {
+  animation-delay: 0.75s;
+}
+.animate-on-scroll .stat-column:nth-child(3) {
+  animation-delay: 0.9s;
+}
+.animate-on-scroll .stat-column:nth-child(4) {
+  animation-delay: 1.05s;
+}
+
+/* =========================================
+   애니메이션 키프레임(Keyframes) 정의
+   ========================================= */
+@keyframes fadeUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes slideInRight {
+@keyframes popIn {
   from {
     opacity: 0;
-    transform: translateX(-40px);
+    transform: translateY(20px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.about {
-  min-height: 100vh;
-  padding: var(--spacing-2xl) var(--spacing-lg);
-  background: white;
-  display: flex;
-  align-items: center;
-}
-
-.about-container {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.section-label {
-  display: inline-block;
-  color: var(--primary-color);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: var(--spacing-md);
-  animation: slideInUp 0.6s ease-out;
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  font-weight: 700;
-  margin: 0 0 var(--spacing-2xl) 0;
-  color: var(--text-color);
-  animation: slideInUp 0.6s ease-out 0.1s backwards;
-}
-
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-2xl);
-  align-items: center;
-}
-
-.about-text {
-  animation: slideInUp 0.6s ease-out 0.2s backwards;
-}
-
-.about-text p {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--text-light);
-  margin: 0 0 var(--spacing-lg) 0;
-  font-weight: 400;
-}
-
-.about-text p:last-of-type {
-  margin-bottom: var(--spacing-xl);
-}
-
-.about-highlights {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-md);
-}
-
-.highlight {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  background: var(--secondary-color);
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-  cursor: default;
-}
-
-.highlight:hover {
-  background: var(--primary-color);
-  color: white;
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-
-.highlight-icon {
-  font-size: 1.5rem;
-}
-
-.highlight-text {
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.about-image {
-  animation: slideInRight 0.6s ease-out 0.2s backwards;
-}
-
-.image-placeholder {
-  width: 100%;
-  aspect-ratio: 4/5;
-  background: linear-gradient(135deg, var(--secondary-color), #f0f0f0);
-  border-radius: var(--radius-xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-}
-
-.image-placeholder::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.image-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  color: var(--text-light);
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .about {
-    min-height: auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
-  }
-
-  .section-title {
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
-  }
-
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-
-  .about-highlights {
-    grid-template-columns: 1fr;
-  }
-
-  .about-text p {
-    font-size: 1rem;
-  }
-
-  .image-placeholder {
-    aspect-ratio: 1/1;
+    transform: translateY(0) scale(1);
   }
 }

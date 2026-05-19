@@ -1,102 +1,145 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Skills.css';
 
 export default function Skills() {
+  // 스크롤 감지를 위한 상태와 Ref 설정
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // 애니메이션이 한 번 가동되면 감지 종료
+        }
+      },
+      { threshold: 0.15 } // 섹션이 화면에 15% 정도 노출될 때 실행
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
   const skillCategories = [
     {
-      category: '프론트엔드',
+      title: 'Frontend\nDevelopment',
+      icon: '⚡',
+      color: '#8b5cf6', // 보라색
       skills: [
-        { name: 'React', level: 95 },
-        { name: 'JavaScript', level: 90 },
-        { name: 'CSS/Sass', level: 88 },
-        { name: 'HTML5', level: 92 },
+        { name: 'React / Next.js', percent: 90 },
+        { name: 'TypeScript', percent: 85 },
+        { name: 'Tailwind CSS', percent: 92 },
+        { name: 'Redux / Zustand', percent: 88 },
       ],
     },
     {
-      category: '백엔드',
+      title: 'Backend\nDevelopment',
+      icon: '⏱️',
+      color: '#10b981', // 초록색
       skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'MongoDB', level: 80 },
-        { name: 'Python', level: 78 },
-        { name: 'API Design', level: 85 },
+        { name: 'Node.js / Express', percent: 92 },
+        { name: 'REST & GraphQL', percent: 88 },
+        { name: 'PostgreSQL / Redis', percent: 86 },
+        { name: 'Prisma / TypeORM', percent: 84 },
       ],
     },
     {
-      category: '디자인',
+      title: 'DevOps &\nCloud',
+      icon: '⬡',
+      color: '#f97316', // 주황색
       skills: [
-        { name: 'Figma', level: 92 },
-        { name: 'UI Design', level: 90 },
-        { name: 'UX Design', level: 88 },
-        { name: 'Prototyping', level: 85 },
+        { name: 'Docker / Kubernetes', percent: 82 },
+        { name: 'AWS / GCP / Vercel', percent: 85 },
+        { name: 'CI/CD Pipelines', percent: 80 },
+        { name: 'Nginx / Linux', percent: 83 },
       ],
     },
     {
-      category: '도구',
+      title: 'Testing &\nQA',
+      icon: '✓',
+      color: '#ec4899', // 핑크색
       skills: [
-        { name: 'Git', level: 90 },
-        { name: 'Webpack', level: 80 },
-        { name: 'Docker', level: 75 },
-        { name: 'VS Code', level: 95 },
+        { name: 'Jest / Vitest', percent: 87 },
+        { name: 'Cypress / Playwright', percent: 84 },
+        { name: 'React Testing Lib', percent: 85 },
+        { name: 'Storybook', percent: 88 },
       ],
     },
   ];
 
   return (
-    <section id="skills" className="skills">
-      <div className="skills-container">
-        <div className="section-label">능력</div>
-        <h2 className="section-title">기술 스택</h2>
+    // ✅ section에 ref를 바인딩하고, 감지 상태에 따라 'animate-on-scroll' 클래스를 주입합니다.
+    <section 
+      id="skills" 
+      className={`skills-tools-section ${isVisible ? 'animate-on-scroll' : ''}`} 
+      ref={sectionRef}
+    >
+      <div className="skills-tools-container">
+        
+        {/* 상단 헤더 */}
+        <div className="skills-header">
+          <h2 className="skills-title">Skills & Tools</h2>
+          <p className="skills-subtitle">
+            Design-driven web development with scalable backend architecture,<br />
+            interactive dashboards, and optimized user experiences.
+          </p>
+        </div>
 
+        {/* 4열 스킬 카드 그리드 */}
         <div className="skills-grid">
-          {skillCategories.map((cat, idx) => (
-            <div 
-              key={idx} 
-              className="skill-category"
-              style={{ animationDelay: `${idx * 0.1}s` }}
-            >
-              <h3 className="category-title">{cat.category}</h3>
-              <div className="skills-list">
-                {cat.skills.map((skill, idx) => (
-                  <div key={idx} className="skill-item">
-                    <div className="skill-header">
+          {skillCategories.map((category, idx) => (
+            <div key={idx} className="skill-card">
+              
+              {/* 카드 헤더 (아이콘 + 제목) */}
+              <div className="skill-card-header">
+                <div 
+                  className="skill-icon-wrapper" 
+                  style={{ backgroundColor: `${category.color}20`, color: category.color }}
+                >
+                  {category.icon}
+                </div>
+                <h3 className="skill-card-title">
+                  {category.title.split('\n').map((line, i) => (
+                    <React.Fragment key={i}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </h3>
+              </div>
+
+              {/* 스킬 목록 및 프로그래스 바 */}
+              <div className="skill-list">
+                {category.skills.map((skill, sIdx) => (
+                  <div key={sIdx} className="skill-item">
+                    <div className="skill-info">
                       <span className="skill-name">{skill.name}</span>
-                      <span className="skill-level">{skill.level}%</span>
+                      <span className="skill-percent">{skill.percent}%</span>
                     </div>
-                    <div className="skill-bar">
+                    <div className="skill-progress-bg">
+                      {/* 💡 CSS 애니메이션 연동을 위해 인라인 스타일에 CSS 변수(--target-width)를 내려줍니다. */}
                       <div 
-                        className="skill-progress"
-                        style={{ width: `${skill.level}%` }}
+                        className="skill-progress-fill" 
+                        style={{ 
+                          '--target-width': `${skill.percent}%`, 
+                          backgroundColor: category.color 
+                        }}
                       ></div>
                     </div>
                   </div>
                 ))}
               </div>
+
             </div>
           ))}
         </div>
 
-        <div className="skill-extras">
-          <div className="extra-item">
-            <span className="extra-icon">🚀</span>
-            <h4>성능 최적화</h4>
-            <p>웹 성능 최적화 및 SEO 전문</p>
-          </div>
-          <div className="extra-item">
-            <span className="extra-icon">♿</span>
-            <h4>접근성</h4>
-            <p>WCAG 표준 준수</p>
-          </div>
-          <div className="extra-item">
-            <span className="extra-icon">🔒</span>
-            <h4>보안</h4>
-            <p>안전한 코드 작성</p>
-          </div>
-          <div className="extra-item">
-            <span className="extra-icon">📱</span>
-            <h4>반응형 디자인</h4>
-            <p>모든 기기에 대응</p>
-          </div>
-        </div>
       </div>
     </section>
   );

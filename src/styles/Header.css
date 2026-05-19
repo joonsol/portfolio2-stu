@@ -1,160 +1,302 @@
-@import './variables.css';
-
+/* =========================================
+   헤더 전체 레이아웃 (스크롤 시 상단 고정)
+   ========================================= */
 .header {
-  position: sticky;
+  background-color: #1a1a1a; /* 다크 모드 기본 배경 */
+  position: fixed;
   top: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
-  z-index: var(--z-dropdown);
-  animation: slideDown 0.5s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-md) var(--spacing-lg);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
 }
 
+/* 💡 [추가] 라이트 모드일 때 헤더 전체 배경 변경 */
+body.light-mode .header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+/* --- 좌측 로고 디자인 --- */
 .logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: 0.8rem;
+  cursor: pointer;
+}
+
+.logo-box {
+  background-color: #ffca3a; /* 메인 노란색 */
+  color: #111111; /* 글자 선명도를 위해 어두운 색 고정 */
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
 }
 
 .logo-text {
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
 }
 
+/* 💡 [추가] 라이트 모드일 때 로고 텍스트 색상 변경 */
+body.light-mode .logo-text {
+  color: #111111 !important;
+}
+
+/* --- 중앙 네비게이션 (PC 버전) --- */
 .nav-list {
-  list-style: none;
   display: flex;
-  gap: var(--spacing-lg);
+  gap: 2.5rem;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .nav-list a {
-  font-family: var(--font-primary);
-  font-size: 0.95rem;
-  color: var(--text-color);
-  text-decoration: none;
-  cursor: pointer;
-  position: relative;
-  transition: color var(--transition-base);
+  color: #a0a0a0; /* 다크 모드 회색 텍스트 */
+  font-size: 0.9rem;
   font-weight: 500;
-}
-
-.nav-list a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary-color);
-  transition: width var(--transition-base);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .nav-list a:hover {
-  color: var(--primary-color);
+  color: #ffffff;
 }
 
-.nav-list a:hover::after {
-  width: 100%;
+/* 💡 [추가] 라이트 모드일 때 메뉴 글씨 색상 변경 (PC/모바일 공통) */
+body.light-mode .nav-list a {
+  color: #555555 !important;
+}
+body.light-mode .nav-list a:hover {
+  color: #000000 !important;
 }
 
+/* --- 우측 버튼 디자인 --- */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-header {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-header.outline {
+  background-color: transparent;
+  color: #a0a0a0;
+  border: 1px solid #444444;
+}
+
+.btn-header.outline:hover {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* 💡 [추가] 라이트 모드일 때 Outline 버튼 스타일 조정 */
+body.light-mode .btn-header.outline {
+  color: #555555 !important;
+  border-color: #cccccc !important;
+}
+body.light-mode .btn-header.outline:hover {
+  color: #000000 !important;
+  border-color: #111111 !important;
+}
+
+.btn-header.yellow {
+  background-color: #ffca3a;
+  color: #111111;
+  border: none;
+}
+
+.btn-header.yellow:hover {
+  background-color: #e6b634;
+}
+
+/* --- 다크/라이트 모드 토글 버튼 토글러 스타일 --- */
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid #444444;
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-right: 0.5rem;
+}
+
+.theme-toggle-btn:hover {
+  background-color: #2a2a2a;
+  transform: scale(1.1) rotate(15deg);
+  border-color: #ffca3a;
+}
+
+body.light-mode .theme-toggle-btn {
+  border-color: #cccccc !important;
+  color: #111111 !important;
+}
+
+body.light-mode .theme-toggle-btn:hover {
+  background-color: #eeeeee !important;
+  border-color: #ffca3a !important;
+}
+
+/* --- 모바일 메뉴 토글 (햄버거 버튼 기본) --- */
 .menu-toggle {
   display: none;
   flex-direction: column;
-  background: none;
+  gap: 5px;
+  background: transparent;
   border: none;
   cursor: pointer;
-  padding: var(--spacing-xs);
-  gap: 5px;
 }
 
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background: var(--text-color);
-  border-radius: 2px;
-  transition: all var(--transition-base);
+  background-color: #ffffff;
+  transition: all 0.3s;
 }
 
-.menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
+/* =========================================
+   반응형 미디어 쿼리 영역
+   ========================================= */
 
-.menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(8px, -8px);
-}
-
-@media (max-width: 768px) {
+/* 태블릿 화면 규격 */
+@media (max-width: 992px) {
+  .nav {
+    display: none;
+  }
+  .nav.active {
+    display: flex;
+  }
   .menu-toggle {
     display: flex;
   }
+}
 
+/* 📱 모바일 화면 규격 (핵심 수정 구역) */
+@media (max-width: 768px) {
+  .header-actions {
+    display: none; /* 모바일 우측 버튼 숨김 */
+  }
+
+  .theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    margin-right: 0.2rem;
+  }
+
+  /* 모바일 펼침 메뉴판 기본 세팅 */
   .nav {
     position: absolute;
     top: 100%;
     left: 0;
-    right: 0;
-    background: white;
-    border-bottom: 1px solid var(--border-color);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height var(--transition-base);
+    width: 100%;
+    background-color: #111111; /* 다크 모드 메뉴 배경 */
+    padding: 1.5rem 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #222222;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  /* 💡 라이트 모드일 때 모바일 메뉴판 배경 전환 */
+  body.light-mode .nav {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e9ecef !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05) !important;
   }
 
   .nav.active {
-    max-height: 300px;
+    display: flex;
   }
 
   .nav-list {
     flex-direction: column;
-    gap: 0;
-    padding: var(--spacing-lg);
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+  }
+
+  .nav-list li {
+    width: 100%;
+    text-align: center;
   }
 
   .nav-list a {
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--border-color);
+    display: block;
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    cursor: pointer;
   }
 
-  .nav-list a::after {
-    display: none;
+  /* 햄버거 버튼 세 줄 뼈대 설정 */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1000;
   }
 
-  .nav-list a:hover {
-    padding-left: var(--spacing-sm);
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
   }
 
-  .header-container {
-    padding: var(--spacing-md);
+  /* 💡 라이트모드일 때 햄버거 삼선 색상 변경 */
+  body.light-mode .menu-toggle span {
+    background-color: #111111 !important;
+  }
+
+  /* 햄버거 메뉴 active 시 'X' 자 애니메이션 */
+  .menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 }

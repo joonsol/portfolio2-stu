@@ -1,6 +1,189 @@
-@import './variables.css';
+/* =========================================
+   Skills & Tools 전체 섹션
+   ========================================= */
+.skills-tools-section {
+  background-color: #1a1a1a;
+  padding: 8rem 2rem;
+  color: #ffffff;
+  min-height: 100vh;
+}
 
-@keyframes slideUp {
+.skills-tools-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 상단 헤더 */
+.skills-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.skills-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+}
+
+.skills-subtitle {
+  color: #a0a0a0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* =========================================
+   스킬 4열 그리드
+   ========================================= */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+/* 개별 스킬 카드 */
+.skill-card {
+  background-color: #242938; /* 이미지와 유사한 다크 네이비/그레이 톤 */
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 카드 상단 헤더 (아이콘 + 제목) */
+.skill-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.skill-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.skill-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* 스킬 아이템 및 프로그래스 바 */
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-name {
+  font-size: 0.85rem;
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+.skill-percent {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.skill-progress-bg {
+  width: 100%;
+  height: 4px;
+  background-color: #374151; /* 프로그래스 바 배경선 */
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skill-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease-in-out;
+}
+
+/* =========================================
+   반응형 레이아웃
+   ========================================= */
+@media (max-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr); /* 태블릿에서는 2열 */
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr; /* 모바일에서는 1열 */
+  }
+  .skills-subtitle br {
+    display: none;
+  }
+}
+
+/* =========================================
+   라이트 모드 호환 (White Mode)
+   ========================================= */
+body.light-mode .skills-tools-section {
+  background-color: #f8f9fa;
+}
+
+body.light-mode .skills-title {
+  color: #111111;
+}
+
+body.light-mode .skills-subtitle {
+  color: #555555;
+}
+
+body.light-mode .skill-card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eeeeee;
+}
+
+body.light-mode .skill-card-title {
+  color: #111111;
+}
+
+body.light-mode .skill-name {
+  color: #444444;
+}
+
+body.light-mode .skill-percent {
+  color: #888888;
+}
+
+body.light-mode .skill-progress-bg {
+  background-color: #e5e7eb;
+}
+
+/* =========================================
+   🎬 Skills 섹션 스크롤 애니메이션
+   ========================================= */
+
+/* 1️⃣ 애니메이션 키프레임 정의 */
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -11,161 +194,133 @@
   }
 }
 
-@keyframes fillBar {
+@keyframes skillCardPopIn {
   from {
-    width: 0;
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
   }
   to {
-    width: var(--final-width);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-.skills {
-  min-height: 100vh;
-  padding: var(--spacing-2xl) var(--spacing-lg);
-  background: white;
-  display: flex;
-  align-items: center;
-}
-
-.skills-container {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-2xl);
-}
-
-.skill-category {
-  background: var(--secondary-color);
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  animation: slideUp 0.6s ease-out backwards;
-  transition: all var(--transition-base);
-  border-left: 4px solid var(--primary-color);
-}
-
-.skill-category:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-
-.category-title {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 var(--spacing-lg) 0;
-  color: var(--text-color);
-}
-
-.skills-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.skill-item {
-  animation: slideUp 0.6s ease-out backwards;
-}
-
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-xs);
-}
-
-.skill-name {
-  font-weight: 600;
-  color: var(--text-color);
-  font-size: 0.95rem;
-}
-
-.skill-level {
-  color: var(--primary-color);
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-
-.skill-bar {
-  width: 100%;
-  height: 6px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.skill-progress {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-  border-radius: var(--radius-sm);
-  animation: fillBar 1s ease-out forwards;
-  box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
-}
-
-.skill-extras {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-lg);
-  margin-top: var(--spacing-2xl);
-  padding-top: var(--spacing-2xl);
-  border-top: 2px solid var(--border-color);
-}
-
-.extra-item {
-  text-align: center;
-  padding: var(--spacing-lg);
-  background: var(--secondary-color);
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-  animation: slideUp 0.6s ease-out backwards;
-}
-
-.extra-item:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-md);
-  background: white;
-  border: 2px solid var(--primary-color);
-}
-
-.extra-icon {
-  display: block;
-  font-size: 2.5rem;
-  margin-bottom: var(--spacing-md);
-}
-
-.extra-item h4 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0 0 var(--spacing-sm) 0;
-  color: var(--text-color);
-}
-
-.extra-item p {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin: 0;
-  line-height: 1.5;
-}
-
-@media (max-width: 768px) {
-  .skills {
-    min-height: auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
+@keyframes progressBarFill {
+  from {
+    width: 0%;
   }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+  to {
+    width: var(--target-width, 100%);
   }
+}
 
-  .skill-extras {
-    grid-template-columns: 1fr;
-  }
+/* 2️⃣ 초기 상태 (숨겨진 상태) */
+.skills-tools-section .skills-header {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.skills-tools-section .skill-card {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.skill-progress-fill {
+  width: 0%;
+}
+
+/* 3️⃣ 스크롤 진입 시 애니메이션 활성화 */
+.skills-tools-section.animate-on-scroll .skills-header {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card {
+  animation: skillCardPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+.skills-tools-section.animate-on-scroll .skill-progress-fill {
+  animation: progressBarFill 1.5s ease-out forwards;
+}
+
+/* 4️⃣ 카드별 시차 지연 (Stagger) */
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(7) {
+  animation-delay: 0.7s;
+}
+
+.skills-tools-section.animate-on-scroll .skill-card:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* 5️⃣ 프로그래스 바 시차 지연 */
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(1)
+  .skill-progress-fill {
+  animation-delay: 0.5s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(2)
+  .skill-progress-fill {
+  animation-delay: 0.6s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(3)
+  .skill-progress-fill {
+  animation-delay: 0.7s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(4)
+  .skill-progress-fill {
+  animation-delay: 0.8s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(5)
+  .skill-progress-fill {
+  animation-delay: 0.9s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(6)
+  .skill-progress-fill {
+  animation-delay: 1s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(7)
+  .skill-progress-fill {
+  animation-delay: 1.1s;
+}
+
+.skills-tools-section.animate-on-scroll
+  .skill-card:nth-child(8)
+  .skill-progress-fill {
+  animation-delay: 1.2s;
 }

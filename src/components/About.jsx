@@ -1,53 +1,66 @@
-import React from 'react';
-import '../styles/About.css';
+import React, { useEffect, useRef, useState } from 'react';
+import '../styles/About.css'; 
 
 export default function About() {
+  // 애니메이션 트리거를 위한 상태와 Ref 설정
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // 화면에 요소가 보이면 isVisible을 true로 변경
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // 한 번 실행된 후에는 감지 중지 (계속 깜빡이지 않게)
+        }
+      },
+      { threshold: 0.3 } // 섹션이 화면에 30% 정도 보일 때 애니메이션 시작
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
   return (
-    <section id="about" className="about">
-      <div className="about-container">
-        <div className="section-label">소개</div>
-        <h2 className="section-title">저에 대해</h2>
+    // section에 ref를 달아주고, isVisible 상태에 따라 클래스 추가
+    <section id="about" className="about-section" ref={sectionRef}>
+      <div className={`about-container ${isVisible ? 'animate-on-scroll' : ''}`}>
         
-        <div className="about-content">
-          <div className="about-text">
-            <p>
-              안녕하세요! 저는 사용자 경험을 중심으로 하는 디자이너이자 개발자입니다.
-              깔끔하고 효율적인 인터페이스 디자인과 그것을 구현하는 것을 좋아합니다.
-            </p>
-            
-            <p>
-              10년 이상의 경험을 바탕으로 다양한 프로젝트를 진행해왔으며,
-              항상 사용자의 관점에서 생각하고 최고의 결과를 만들기 위해 노력합니다.
-            </p>
+        {/* 메인 제목 및 부제목 */}
+        <div className="about-header-text">
+          <h2 className="about-title">Design & Code Studio</h2>
+          <p className="about-subtitle">
+            Full-stack backend developer with modern UI design systems, scalable architecture, admin dashboards, and creative web experiences.
+          </p>
+        </div>
 
-            <div className="about-highlights">
-              <div className="highlight">
-                <span className="highlight-icon">🎯</span>
-                <span className="highlight-text">사용자 중심 디자인</span>
-              </div>
-              <div className="highlight">
-                <span className="highlight-icon">💻</span>
-                <span className="highlight-text">모던한 개발 기술</span>
-              </div>
-              <div className="highlight">
-                <span className="highlight-icon">⚡</span>
-                <span className="highlight-text">빠른 성능 최적화</span>
-              </div>
-              <div className="highlight">
-                <span className="highlight-icon">🎨</span>
-                <span className="highlight-text">창의적인 디자인</span>
-              </div>
-            </div>
+        {/* 중앙 통계 박스 */}
+        <div className="about-stats-box">
+          <div className="stat-column">
+            <h3>5+</h3>
+            <p>Fullstack Exp.</p>
           </div>
-
-          <div className="about-image">
-            <div className="image-placeholder">
-              <div className="image-content">
-                <span>당신의 이미지</span>
-              </div>
-            </div>
+          <div className="stat-column">
+            <h3>40+</h3>
+            <p>Projects</p>
+          </div>
+          {/* 'Collaborations' 텍스트 줄바꿈을 위해 클래스 추가 */}
+          <div className="stat-column collaborations">
+            <h3>15+</h3>
+            <p>Collaborati<br/>ons</p>
+          </div>
+          <div className="stat-column">
+            <h3>99%</h3>
+            <p>Deployments</p>
           </div>
         </div>
+        
       </div>
     </section>
   );

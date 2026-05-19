@@ -1,0 +1,267 @@
+/* =========================================
+   Project Shorts 섹션 전체 레이아웃
+   ========================================= */
+.shorts-section {
+  background-color: #1a1a1a;
+  padding: 8rem 2rem;
+  min-height: 100vh;
+}
+
+.shorts-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 상단 헤더 */
+.shorts-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.shorts-main-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.shorts-subtitle {
+  color: #a0a0a0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* =========================================
+   3x2 그리드 레이아웃
+   ========================================= */
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 */
+  gap: 2rem;
+}
+
+/* 카드 디자인 */
+.short-card {
+  background-color: #141414; /* 배경보다 살짝 어두운 카드 색상 */
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.short-card:hover {
+  transform: translateY(-5px); /* 마우스 올렸을 때 살짝 떠오름 */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 썸네일 이미지 */
+.short-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: #2a2a2a;
+}
+
+.short-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 카드 텍스트 정보 영역 */
+.short-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* 높이를 균일하게 맞추기 위함 */
+}
+
+.short-title {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+/* 기술 스택 뱃지 */
+.short-tech-list {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.short-tech-badge {
+  background-color: #2a2d35;
+  color: #8892b0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+/* 설명 텍스트 */
+.short-desc {
+  color: #777777;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+/* 하단 버튼 2개 */
+.short-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.btn-short {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-short.yellow {
+  background-color: #ffca3a;
+  color: #111111;
+  border: none;
+}
+
+.btn-short.yellow:hover {
+  background-color: #e6b634;
+}
+
+.btn-short.outline {
+  background-color: transparent;
+  color: #cccccc;
+  border: 1px solid #444444;
+}
+
+.btn-short.outline:hover {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+/* =========================================
+   반응형 처리 (화면이 작아질 때)
+   ========================================= */
+@media (max-width: 1024px) {
+  .shorts-grid {
+    grid-template-columns: repeat(2, 1fr); /* 태블릿: 한 줄에 2개씩 */
+  }
+}
+
+@media (max-width: 768px) {
+  .shorts-grid {
+    grid-template-columns: 1fr; /* 모바일: 한 줄에 1개씩 */
+  }
+
+  .shorts-subtitle br {
+    display: none;
+  }
+}
+
+/* =========================================
+   라이트 모드 (White Mode) 호환성
+   ========================================= */
+body.light-mode .shorts-section {
+  background-color: #f8f9fa;
+}
+
+body.light-mode .shorts-main-title {
+  color: #111111;
+}
+
+body.light-mode .shorts-subtitle {
+  color: #555555;
+}
+
+body.light-mode .short-card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .short-title {
+  color: #111111;
+}
+
+body.light-mode .short-tech-badge {
+  background-color: #eeeeee;
+  color: #555555;
+}
+
+body.light-mode .short-desc {
+  color: #666666;
+}
+
+body.light-mode .btn-short.outline {
+  color: #444444;
+  border-color: #cccccc;
+}
+
+body.light-mode .btn-short.outline:hover {
+  background-color: #f1f1f1;
+  color: #111111;
+}
+
+/* =========================================
+   Project Shorts 스크롤 시차 애니메이션
+   ========================================= */
+
+/* 1. 애니메이션 발동 전 초기 대기 상태 */
+.shorts-section .shorts-header {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* 모든 미니 카드들: 처음에 숨겨두고 살짝 아래 배치 */
+.shorts-section .short-card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* 2. 스크롤 활성화 상태 (.animate-on-scroll 가 붙었을 때) */
+/* 타이틀 등장 */
+.shorts-section.animate-on-scroll .shorts-header {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+/* 카드 전체 등장 처리 */
+.shorts-section.animate-on-scroll .short-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+
+/* 3. ⏳ 6개 카드가 순서대로 뾰로롱 나타나는 시차 지연(Delay) 설정 */
+.shorts-section.animate-on-scroll .short-card:nth-child(1) {
+  transition-delay: 0.5s;
+}
+.shorts-section.animate-on-scroll .short-card:nth-child(2) {
+  transition-delay: 0.6s;
+}
+.shorts-section.animate-on-scroll .short-card:nth-child(3) {
+  transition-delay: 0.7s;
+}
+.shorts-section.animate-on-scroll .short-card:nth-child(4) {
+  transition-delay: 0.8s;
+}
+.shorts-section.animate-on-scroll .short-card:nth-child(5) {
+  transition-delay: 0.9s;
+}
+.shorts-section.animate-on-scroll .short-card:nth-child(6) {
+  transition-delay: 0.9s;
+}

@@ -3,7 +3,8 @@ import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Projects from './components/Projects.jsx';
-import Skills from './components/Skills.jsx';
+import ProjectShorts from "./components/ProjectShorts.jsx"; // 여기도 공백 없이!
+import Skills from './components/Skills.jsx'; // 👈 1. Skills 컴포넌트를 불러옵니다!
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
 import './styles/App.css';
@@ -41,7 +42,8 @@ function App() {
       <Hero />
       <About />
       <Projects />
-      <Skills />
+      <ProjectShorts />
+      <Skills /> {/* 👈 2. ProjectShorts 아래, Contact 위에 스킬 섹션을 넣습니다! */}
       <Contact />
       <Footer />
     </div>

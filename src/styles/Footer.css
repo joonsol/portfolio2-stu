@@ -1,16 +1,21 @@
-@import './variables.css';
+@import "./variables.css";
 
 .footer {
   background: linear-gradient(135deg, var(--text-color) 0%, #2a2a2a 100%);
   color: white;
   position: relative;
   padding-bottom: 60px;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: var(--spacing-2xl) var(--spacing-lg);
+  background-color: #1a1a1a; /* 공통 다크 차콜/블랙 배경 */
+  transition: background-color 0.3s ease;
 }
 
 .footer-content {
@@ -71,7 +76,7 @@
 }
 
 .footer-links a::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -91,7 +96,12 @@
 
 .footer-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   margin: var(--spacing-xl) 0;
 }
 
@@ -177,6 +187,7 @@
   }
 }
 
+/* 반응형 모바일 미디어쿼리 */
 @media (max-width: 768px) {
   .footer {
     padding-bottom: 80px;
@@ -204,4 +215,78 @@
     height: 44px;
     font-size: 1.2rem;
   }
+}
+
+/* ==========================================================================
+   💡 [추가] 라이트 모드 전용 스타일 팩 (body.light-mode 연동)
+   ========================================================================== */
+body.light-mode .footer {
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%) !important;
+  color: #111111 !important;
+}
+
+body.light-mode .footer-container {
+  background-color: #ffffff !important;
+  border-top: 1px solid #e9ecef !important;
+}
+
+/* 대제목 그라데이션 어둡게 변경 */
+body.light-mode .footer-title {
+  background: linear-gradient(135deg, #111111, #555555) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+body.light-mode .footer-text {
+  color: #555555 !important;
+}
+
+body.light-mode .footer-heading {
+  color: #111111 !important;
+}
+
+/* 링크 메뉴 색상 리팩토링 */
+body.light-mode .footer-links a {
+  color: #555555 !important;
+}
+
+body.light-mode .footer-links a:hover {
+  color: #000000 !important;
+}
+
+/* 중간 구분선 색상 연하게 변경 */
+body.light-mode .footer-divider {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.08),
+    transparent
+  ) !important;
+}
+
+/* 최하단 저작권 및 하단 링크 영역 */
+body.light-mode .footer-bottom,
+body.light-mode .footer-links-bottom a {
+  color: #777777 !important;
+}
+
+body.light-mode .footer-links-bottom a:hover {
+  color: #000000 !important;
+}
+
+body.light-mode .divider {
+  color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 🔥 탑 버튼(Scroll to Top) 시인성 확보: 라이트모드에선 포인트 노란색으로 노출 */
+body.light-mode .scroll-to-top {
+  background: #ffca3a !important;
+  color: #111111 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode .scroll-to-top:hover {
+  background: #e6b634 !important;
+  transform: translateY(-4px);
 }

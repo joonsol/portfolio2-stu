@@ -1,4 +1,4 @@
-@import './variables.css';
+@import "./variables.css";
 
 * {
   margin: 0;
@@ -231,4 +231,92 @@ button:focus-visible {
   .contact-form {
     background: #1a1a1a;
   }
+}
+/* =========================================
+   About 섹션 라이트 모드 전용 패치
+   ========================================= */
+
+/* 1. About 섹션 전체 배경을 밝게 */
+body.light-mode .about-section {
+  background: #f8f9fa !important;
+  background-color: #f8f9fa !important;
+}
+
+/* 2. 중앙 통계 박스를 화사한 흰색 카드로 변경 */
+body.light-mode .about-stats-box {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e9ecef !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 3. 통계 박스 내부의 숫자(h3)와 설명(p)을 진한 텍스트로 강제 전환 */
+body.light-mode .about-stats-box .stat-column h3,
+body.light-mode .about-stats-box .stat-column p {
+  color: #111111 !important;
+}
+
+/* 4. 메인 제목과 서브 타이틀 글씨 색상 고정 */
+body.light-mode .about-title {
+  color: #111111 !important;
+}
+
+body.light-mode .about-subtitle {
+  color: #555555 !important;
+}
+/* =========================================
+   Hero 섹션 라이트 모드 전용 패치
+   ========================================= */
+
+/* 1. Hero 섹션 전체 배경을 밝은 연회색으로 */
+body.light-mode .hero {
+  background: #f8f9fa !important;
+  background-color: #f8f9fa !important;
+}
+
+/* 2. 메인 타이틀 & 서브 타이틀 글씨 색상 고정 */
+body.light-mode .hero-title {
+  color: #111111 !important;
+}
+
+body.light-mode .hero-subtitle {
+  color: #555555 !important;
+}
+
+/* 3. 상단 초록/노란 안내 배지 (AVAILABLE FOR...) 가독성 높이기 */
+body.light-mode .availability {
+  color: #e6b634 !important; /* 살짝 진한 노란색 */
+  background: rgba(255, 202, 58, 0.1) !important; /* 연한 노란색 배경 상자 */
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* 4. 🔥 [가장 중요] 우측 거대 배경 타이포그래피 전환 */
+/* 배경이 하얘졌으므로, 글씨를 투명한 검은색 톤으로 바꿔서 은은하게 깔리도록 만듭니다 */
+body.light-mode .bg-typography .bg-text {
+  color: rgba(0, 0, 0, 0.03) !important; /* 아주 연한 먹색 */
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.04) !important; /* 혹시 외곽선 텍스트라면 연하게 조정 */
+}
+
+/* 5. 버튼 스타일 라이트 모드 최적화 */
+/* 내 작업 보기 (노란 버튼) */
+body.light-mode .hero-buttons .btn-primary {
+  background-color: #ffca3a !important;
+  color: #111111 !important;
+  border: none !important;
+}
+body.light-mode .hero-buttons .btn-primary:hover {
+  background-color: #e6b634 !important;
+}
+
+/* 연락하세요 (테두리 버튼) */
+body.light-mode .hero-buttons .btn-secondary {
+  background-color: transparent !important;
+  border: 2px solid #111111 !important;
+  color: #111111 !important;
+}
+body.light-mode .hero-buttons .btn-secondary:hover {
+  background-color: #111111 !important;
+  color: #ffffff !important;
 }
